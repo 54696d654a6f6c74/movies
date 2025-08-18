@@ -13,7 +13,7 @@
     "lint:fix": "next lint --fix",
     "preview": "next build && next start",
     "start": "next start",
-    "deploy:prod": "next build && pm2 startOrRestart ecosystem.config.js --env prod",
+    "deploy:prod": "next build && pm2 startOrRestart ecosystem.config.cjs --env prod",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
