@@ -15,7 +15,7 @@ import { Loader2Icon } from "lucide-react";
 
 const FormSchema = z.object({
   imdbLink: z.string().regex(
-    /^https:\/\/www\.imdb\.com\/(title\/tt\d{7,8})\?*/,
+    /imdb\.com\/(title\/tt\d{7,8})\?*/,
     {
       message: "Nice try... Use a real link.",
     }),
