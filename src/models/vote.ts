@@ -44,9 +44,9 @@ export class VoteModel {
     return;
   }
 
-  async removeVoteForUser(userId: string) {
+  async removeVoteForUser(userId: string, movieId: string) {
     try {
-      await this.db.exec(`DELETE FROM votes WHERE username = "${userId}"`)
+      await this.db.exec(`DELETE FROM votes WHERE username = "${userId}" AND movie_id = "${movieId}"`)
     } catch (e) {
       console.error(e)
     }

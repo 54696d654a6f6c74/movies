@@ -32,7 +32,7 @@ export default function MovieCard({ movie }: Props) {
 
     try {
       if (isVoted) {
-        await removeVote.mutateAsync({ userId })
+        await removeVote.mutateAsync({ userId, movieId: movie.id })
       } else {
         await addVote.mutateAsync({ movieId: movie.id, userId })
       }

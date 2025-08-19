@@ -29,11 +29,11 @@ export const voteRouter = createTRPCRouter({
     }),
 
   removeVote: protectedProcedure
-    .input(z.object({ userId: z.string() }))
+    .input(z.object({ userId: z.string(), movieId: z.string() }))
     .mutation(async ({ input, ctx }) => {
       const model = new VoteModel(ctx.db!);
 
-      return model.removeVoteForUser(input.userId);
+      return model.removeVoteForUser(input.userId, input.movieId);
     })
 })
 
