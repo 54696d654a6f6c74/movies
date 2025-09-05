@@ -11,6 +11,19 @@ type Props = {
 }
 
 export default function MovieCard({ movie }: Props) {
+  return <div className="flex flex-col gap-2">
+    <div className="h-full w-full flex items-center justify-center">
+      <a href={`https://www.imdb.com/title/${movie.id}`} target="_blank">
+        <img src={movie.image_url} alt={movie.title} />
+      </a>
+    </div>
+
+    <span className="w-full text-center text-2xl font-bold">{movie.title}</span>
+
+  </div>
+}
+
+export function MovieCardVoteable({ movie }: Props) {
   const [loading, setLoading] = useState(false);
 
   const voteQuery = api.vote.getAllForMovie.useQuery({ movieId: movie.id });
@@ -44,13 +57,7 @@ export default function MovieCard({ movie }: Props) {
   }
 
   return <div className="flex flex-col gap-2">
-    <div className="h-full w-full flex items-center justify-center">
-      <a href={`https://www.imdb.com/title/${movie.id}`} target="_blank">
-        <img src={movie.image_url} alt={movie.title} />
-      </a>
-    </div>
-
-    <span className="w-full text-center text-2xl font-bold">{movie.title}</span>
+    <MovieCard movie={movie} />
 
     <div className="flex justify-around items-center">
       <span >

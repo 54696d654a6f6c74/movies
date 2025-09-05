@@ -25,7 +25,19 @@ export class MovieModel {
   }
 
   async getAll(): Promise<Movie[] | undefined> {
-    const movies: Movie[] | undefined = await this.db.all(`SELECT * FROM movies ORDER BY votes DESC`);
+    const movies: Movie[] | undefined = await this.db.all(`SELECT * FROM movies ORDER BY suggestion_timestamp DESC`);
+
+    return movies;
+  }
+
+  async getUnwatched(): Promise<Movie[] | undefined> {
+    const movies: Movie[] | undefined = await this.db.all(`SELECT * FROM movies WHERE watched < 1 ORDER BY votes DESC`);
+
+    return movies;
+  }
+
+  async getWatched(): Promise<Movie[] | undefined> {
+    const movies: Movie[] | undefined = await this.db.all(`SELECT * FROM movies WHERE watched > 0 ORDER BY suggestion_timestamp DESC`);
 
     return movies;
   }

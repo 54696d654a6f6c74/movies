@@ -36,12 +36,20 @@ export const movieRouter = createTRPCRouter({
       }
     }),
 
-  getAll: protectedProcedure
+  getUnwatched: protectedProcedure
     .query(async ({ ctx }) => {
 
       const model = new MovieModel(ctx.db!);
 
-      return model.getAll();
+      return model.getUnwatched();
+    }),
+
+  getWatched: protectedProcedure
+    .query(async ({ ctx }) => {
+
+      const model = new MovieModel(ctx.db!);
+
+      return model.getWatched();
     }),
 
   add: protectedProcedure.input(MovieSchema).mutation(async ({ input, ctx }) => {
