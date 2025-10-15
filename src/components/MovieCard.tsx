@@ -7,14 +7,15 @@ import { Button } from "./ui/button";
 import { ChevronsDownIcon, ChevronsUpIcon, Loader2Icon } from "lucide-react";
 
 type Props = {
-  movie: Movie
+  movie: Movie;
+  eager: boolean;
 }
 
-export default function MovieCard({ movie }: Props) {
+export default function MovieCard({ movie, eager }: Props) {
   return <div className="flex flex-col gap-2">
     <div className="h-full w-full flex items-center justify-center">
       <a href={`https://www.imdb.com/title/${movie.id}`} target="_blank">
-        <img src={movie.image_url} alt={movie.title} />
+        <img loading={eager ? 'eager' : 'lazy'} src={movie.image_url} alt={movie.title} />
       </a>
     </div>
 
@@ -23,7 +24,7 @@ export default function MovieCard({ movie }: Props) {
   </div>
 }
 
-export function MovieCardVoteable({ movie }: Props) {
+export function MovieCardVoteable({ movie, eager }: Props) {
   const [loading, setLoading] = useState(false);
 
   const voteQuery = api.vote.getAllForMovie.useQuery({ movieId: movie.id });
@@ -57,7 +58,7 @@ export function MovieCardVoteable({ movie }: Props) {
   }
 
   return <div className="flex flex-col gap-2">
-    <MovieCard movie={movie} />
+    <MovieCard eager={eager} movie={movie} />
 
     <div className="flex justify-around items-center">
       <span >

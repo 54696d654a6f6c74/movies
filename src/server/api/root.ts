@@ -2,6 +2,7 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 import { movieRouter } from "./routers/movie";
 import { userRouter } from "./routers/user";
 import { voteRouter } from "./routers/vote";
+import { eventRouter } from "./routers/event";
 
 /**
  * This is the primary router for your server.
@@ -11,7 +12,8 @@ import { voteRouter } from "./routers/vote";
 export const appRouter = createTRPCRouter({
   movie: movieRouter,
   user: userRouter,
-  vote: voteRouter
+  vote: voteRouter,
+  event: eventRouter
 });
 
 // export type definition of API

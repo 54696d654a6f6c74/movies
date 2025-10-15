@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import SidePanel, { ListedPage } from "./SidePanel";
 import { useSession } from "next-auth/react";
 import { Loader2Icon } from "lucide-react";
+import EventAnnoucement from "./EventAnnouncement";
 
 const FormSchema = z.object({
   imdbLink: z.string().regex(
@@ -56,44 +57,46 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-row justify-center items-center w-screen">
-      <div >
-        <SidePanel currentPage={ListedPage.SUGGEST_MOVIE} />
+    <>
+      <EventAnnoucement />
+      <div className="flex flex-row justify-center items-center w-screen">
+        <div >
+          <SidePanel currentPage={ListedPage.SUGGEST_MOVIE} />
+        </div>
+        <div className="w-full flex flex-col items-center justify-center gap-12 px-4 py-16">
+          <Form {...form}>
+            <form onSubmit={e => {
+              e.preventDefault();
+              return form.handleSubmit(onSubmit)(e);
+            }} className="flex flex-row gap-1">
+              <FormField control={form.control} name="imdbLink" render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input placeholder="Enter IMDb link..." {...field} />
+                  </FormControl>
+                  <FormMessage className="duration-200 animate-bounce ease-out" />
+                </FormItem>
+              )}>
+              </FormField>
+              <Button type="submit" className="flex gap-1">
+                {(movieQuery.isFetching || addMovie.isPending) && (
+                  <Loader2Icon className="animate-spin" />
+                )}
+                <span>
+                  Suggest
+                </span>
+              </Button>
+            </form>
+          </Form>
+          {movieQuery.data && (
+            <div className="flex flex-col gap-4 items-center justify-center">
+              <span className="text-xl">{movieQuery.data.sugguested ? "Movie already suggested" : "Suggestion added"}</span>
+              <img src={movieQuery.data.imageUrl} alt={movieQuery.data.title} />
+            </div>
+          )}
+        </div>
       </div>
-      <div className="w-full flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <Form {...form}>
-          <form onSubmit={e => {
-            e.preventDefault();
-            return form.handleSubmit(onSubmit)(e);
-          }} className="flex flex-row gap-1">
-            <FormField control={form.control} name="imdbLink" render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input placeholder="Enter IMDb link..." {...field} />
-                </FormControl>
-                <FormMessage className="duration-200 animate-bounce ease-out" />
-              </FormItem>
-            )}>
-            </FormField>
-            <Button type="submit" className="flex gap-1">
-              {(movieQuery.isFetching || addMovie.isPending) && (
-                <Loader2Icon className="animate-spin" />
-              )}
-              <span>
-                Suggest
-              </span>
-            </Button>
-          </form>
-        </Form>
-        {movieQuery.data && (
-          <div className="flex flex-col gap-4 items-center justify-center">
-            <span className="text-xl">{movieQuery.data.sugguested ? "Movie already suggested" : "Suggestion added"}</span>
-            <img src={movieQuery.data.imageUrl} alt={movieQuery.data.title} />
-          </div>
-        )}
-
-      </div>
-    </div>
+    </>
   );
 }
 

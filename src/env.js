@@ -10,6 +10,8 @@ export const env = createEnv({
     NODE_ENV: z.enum(["development", "test", "production"]),
     API_KEY: z.string(),
     NEXTAUTH_SECRET: z.string(),
+    EVENT_TIME: z.number(),
+    EVENT_LOCATION: z.string(),
   },
 
   /**
@@ -29,6 +31,8 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     API_KEY: process.env.API_KEY,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    EVENT_TIME: parseInt(process.env.EVENT_TIME ?? '0'),
+    EVENT_LOCATION: process.env.EVENT_LOCATION,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

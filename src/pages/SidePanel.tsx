@@ -19,7 +19,7 @@ export default function SidePanel({ currentPage }: Props) {
   return (
     <>
       {sidePanel.isMobile && !sidePanel.openMobile && (
-        <Button className="fixed top-4 left-4 z-50" size="icon" variant="secondary" onClick={() => sidePanel.setOpenMobile(true)}>
+        <Button className="fixed top-8 left-4 z-50" size="icon" variant="secondary" onClick={() => sidePanel.setOpenMobile(true)}>
           <SidebarOpenIcon />
         </Button>
       )}

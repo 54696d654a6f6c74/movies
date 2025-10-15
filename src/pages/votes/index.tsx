@@ -3,6 +3,7 @@ import SidePanel, { ListedPage } from "../SidePanel";
 import { api } from "~/utils/api";
 import { MovieCardVoteable } from "~/components/MovieCard";
 import { useSession } from "next-auth/react";
+import EventAnnoucement from "../EventAnnouncement";
 
 export default function VotePage() {
   useSession({
@@ -22,6 +23,7 @@ export default function VotePage() {
           <SidePanel currentPage={ListedPage.VOTE_MOVIE} />
         </div>
         <div className="w-full flex flex-col items-center justify-center gap-12 px-4 py-16">
+          <EventAnnoucement />
           <div className="w-full flex flex-wrap gap-4 items-center justify-center lg:justify-start">
             <MovieList />
           </div>
@@ -39,8 +41,8 @@ function MovieList() {
   }
 
   return <>
-    {movieQuery.data?.map((movie) => {
-      return <MovieCardVoteable movie={movie} key={movie.id} />
+    {movieQuery.data?.map((movie, i) => {
+      return <MovieCardVoteable eager={i <= 8} movie={movie} key={movie.id} />
     })}
   </>
 }

@@ -3,6 +3,7 @@ import Head from "next/head";
 import SidePanel, { ListedPage } from "../SidePanel";
 import { api } from "~/utils/api";
 import MovieCard from "~/components/MovieCard";
+import EventAnnoucement from "../EventAnnouncement";
 
 export default function WatchedMoviesPage() {
   useSession({ required: true })
@@ -20,6 +21,7 @@ export default function WatchedMoviesPage() {
           <SidePanel currentPage={ListedPage.WATCHED_MOVIE} />
         </div>
         <div className="w-full flex flex-col items-center justify-center gap-12 px-4 py-16">
+          <EventAnnoucement />
           <div className="w-full flex flex-wrap gap-4 items-center justify-center lg:justify-start">
             <MovieList />
           </div>
@@ -37,8 +39,8 @@ function MovieList() {
   }
 
   return <>
-    {movieQuery.data?.map((movie) => {
-      return <MovieCard movie={movie} key={movie.id} />
+    {movieQuery.data?.map((movie, i) => {
+      return <MovieCard eager={i <= 8} movie={movie} key={movie.id} />
     })}
   </>
 }
